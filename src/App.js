@@ -1,16 +1,80 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
+import './App.css';
 
 function App() {
+  const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
+  const [isFloating, setIsFloating] = useState(true);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(60);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          setIsFloating(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleNoHover = () => {
+    if (isFloating) {
+      const maxX = window.innerWidth - 150;
+      const maxY = window.innerHeight - 80;
+      const newX = Math.random() * maxX;
+      const newY = Math.random() * maxY;
+      setNoButtonPosition({ x: newX, y: newY });
+    }
+  };
+
+  const handleYesClick = () => {
+    setShowConfetti(true);
+  };
+
   return (
-    <div style={{ textAlign: 'center' }}>
-      <header>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+    <div className="App">
+      <div className="overlay"></div>
+      
+      <div className="content">
+        <div className="emoji">🏍️</div>
+        <h1 className="title">Night Ride?</h1>
+        <p className="subtitle">Let's hit the road under the stars!</p>
+
+        <div className="buttons-container">
+          <button 
+            className="btn btn-yes"
+            onClick={handleYesClick}
+          >
+            Hell Yeah! 🔥
+          </button>
+          
+          <button 
+            className={`btn btn-no ${isFloating ? 'floating' : ''}`}
+            style={isFloating && noButtonPosition.x !== 0 ? {
+              position: 'fixed',
+              left: `${noButtonPosition.x}px`,
+              top: `${noButtonPosition.y}px`,
+              transition: 'all 0.3s ease'
+            } : {}}
+            onMouseEnter={handleNoHover}
+            onTouchStart={handleNoHover}
+          >
+            Maybe Not... 😅
+          </button>
+        </div>
+
+        {showConfetti && (
+          <div className="success-message">
+            <div className="confetti">🎉</div>
+            <h2>Awesome! Let's ride! 🏍️💨</h2>
+            <p>Get ready for an epic night!</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
