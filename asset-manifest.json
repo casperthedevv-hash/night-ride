@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/night-ride/static/css/main.0cca9302.css",
+    "main.js": "/night-ride/static/js/main.18547fea.js",
+    "index.html": "/night-ride/index.html",
+    "main.0cca9302.css.map": "/night-ride/static/css/main.0cca9302.css.map",
+    "main.18547fea.js.map": "/night-ride/static/js/main.18547fea.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0cca9302.css",
+    "static/js/main.18547fea.js"
+  ]
+}
