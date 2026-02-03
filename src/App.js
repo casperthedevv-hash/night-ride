@@ -5,20 +5,13 @@ function App() {
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
   const [isFloating, setIsFloating] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(60);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          setIsFloating(false);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    const timer = setTimeout(() => {
+      setIsFloating(false);
+    }, 60000);
 
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleNoHover = () => {
